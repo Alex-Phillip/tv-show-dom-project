@@ -1,17 +1,26 @@
 #root {
-  color: red;
-  background-color: green;
+  color: black;
+  /* background-color: darkcyan; */
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
 }
 
 #episodeContainer {
+  padding: 20px 0;
+  grid-column: 2 / 3;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  /* grid-template-rows: auto; */
-  grid-gap: 5px;
+  grid-template-columns: repeat(4, 1fr); /* can change amount of columns in repeat bracket */
+  grid-gap: 1rem;
 }
 
 #episode {
-  /* width: 25%; */
   text-align: center;
   border: solid 1px black;
+  padding: 0.5em;
+  background-color: blue;
+}
+
+#heading {
+  text-decoration: underline;
+  text-decoration-color: red;
 }

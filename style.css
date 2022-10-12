@@ -1,7 +1,17 @@
 #root {
   color: red;
+  background-color: green;
 }
 
 #episodeContainer {
-  
-};
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-rows: auto; */
+  grid-gap: 5px;
+}
+
+#episode {
+  /* width: 25%; */
+  text-align: center;
+  border: solid 1px black;
+}

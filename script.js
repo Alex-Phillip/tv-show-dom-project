@@ -9,12 +9,12 @@ function makePageForEpisodes(episodeList) {
   // rootElem.textContent = `Got ${episodeList.length} episode(s)`; ORIGINAL GIVEN CODE
   
   const episodeContainer = document.getElementById("episodeContainer");
-
-  const episode = document.createElement("ul");
-
+  
   episodeList.forEach(episode => {
-    let thisEpisode = document.createElement("li");
+    let thisEpisode = document.createElement("article");
     thisEpisode.style.listStyle = "none";
+    thisEpisode.style.backgroundColor = "blue";
+    thisEpisode.setAttribute("id", "episode");
 
     let heading = document.createElement("h1");
     episode["season"] < 10

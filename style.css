@@ -1,12 +1,15 @@
-#root {
-  color: black;
+/* @media only screen and (max-width: 600px) { */
+
+#main {
+  color: white;
   /* background-color: darkcyan; */
+  background-image: linear-gradient(to bottom right, darkslategrey, black);
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
 }
 
-#episodeContainer {
-  padding: 20px 0;
+#episodesContainer {
+  padding: 1.5rem 0;
   grid-column: 2 / 3;
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* can change amount of columns in repeat bracket */
@@ -15,12 +18,25 @@
 
 #episode {
   text-align: center;
-  border: solid 1px black;
+  border: solid .1rem black;
   padding: 0.5em;
-  background-color: blue;
+  /* background-color: grey; */
+  background-image: linear-gradient(to bottom right, grey, darkcyan);
 }
 
-#heading {
-  text-decoration: underline;
-  text-decoration-color: red;
+
+/* } */
+
+#summary {
+  font-family: 'Questrial', serif;
+  font-weight: lighter;
+  line-height: 125%;
+  font-size: 1.3em;
+  border-top: groove white .1rem;
+  padding-top: 1rem;
+}
+
+
+#howManyEpisodesDisplayed {
+  color: red;
 }

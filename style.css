@@ -20,18 +20,15 @@
   text-align: center;
   border: solid .1rem black;
   padding: 0.5em;
-  /* background-color: grey; */
   background-image: linear-gradient(to bottom right, grey, darkcyan);
 }
 
-#episode:hover > #episodeSummary {
+#episode:hover ~ #episode {
+  opacity: 0.5;
   color: black;
   border-color: transparent;
 }
 
-#episode:hover > #episodeTitle {
-  color: black;
-}
 
 
 /* } */
@@ -46,8 +43,12 @@
 }
 
 #header {
+  text-align: center;
 }
 
+#footer {
+  text-align: center;
+}
 
 #howManyEpisodesDisplayed {
   color: red;

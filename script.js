@@ -11,11 +11,21 @@ function makePageForEpisodes(episodeList) {
   const header = document.createElement("div");
   header.setAttribute("id", "header");
   html.appendChild(header);
-  // Create p element to show how many episodes currently displayed and append to header
+  // Create p element to show how many episodes are currently displayed and append to header
   let howManyEpisodesDisplayed = document.createElement("p");
   howManyEpisodesDisplayed.setAttribute("id", "howManyEpisodesDisplayed");
   howManyEpisodesDisplayed.innerText = `Displaying ${episodeList.length} of ${episodeList.length} episode(s)`;
   header.appendChild(howManyEpisodesDisplayed);
+  // Create search box and append to header
+  const searchBox = document.createElement("input");
+  searchBox.setAttribute("id", "searchBox");
+  searchBox.setAttribute("type", "search");
+  searchBox.setAttribute("placeholder", "Search...");
+  header.appendChild(searchBox);
+
+  const resultsList = document.createElement("ul");
+  resultsList.setAttribute("id", "resultsList");
+  // append? where? needs populating...
 
   // Create main div and append to <html>
   const main = document.createElement("div");
@@ -48,6 +58,7 @@ function makePageForEpisodes(episodeList) {
 
     // 3a. Creates an img element to show episode thumb
     let thumb = document.createElement("img");
+    thumb.setAttribute("id", "thumb");
     // 3b. Sets <img> src to episode medium image
     thumb.src = episode["image"]["medium"];
     // 3c. Appends <img> to article
@@ -74,12 +85,10 @@ function makePageForEpisodes(episodeList) {
 
   // Create p element to give credit to TVMaze.com and append to footer
   let credit = document.createElement("p");
-  credit.setAttribute("id", "credit");
   credit.innerText = "All data sourced from ";
   footer.appendChild(credit);
   // Create link element to link to TVMaze.com (open in new tab) and append to <p>
   let tvmaze = document.createElement("a");
-  tvmaze.setAttribute("id", "tvmaze");
   tvmaze.setAttribute("target", "_blank");
   tvmaze.innerText = "TVMaze.com";
   tvmaze.href = "https://www.tvmaze.com/";

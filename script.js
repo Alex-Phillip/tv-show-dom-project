@@ -29,16 +29,26 @@ let searchFunctionality = () => {
   });
 };
 
-  // Create p element to give credit to TVMaze.com and append to footer
-  let credit = document.createElement("p");
-  credit.innerText = "All data sourced from ";
-  footer.appendChild(credit);
-  // Create link element to link to TVMaze.com (open in new tab) and append to <p>
-  let tvmaze = document.createElement("a");
-  tvmaze.setAttribute("target", "_blank");
-  tvmaze.innerText = "TVMaze.com";
-  tvmaze.href = "https://www.tvmaze.com/";
-  credit.appendChild(tvmaze);
+// Create dropdown and dropdown functionality
+for (let key of allEpisodes) {
+  let option = document.createElement("option");
+  option.setAttribute("value", key.name);
+
+  option.innerText = `${key["name"]}`;
+
+  episodesDropdown.appendChild(option);
+}
+
+// Create p element to give credit to TVMaze.com and append to footer
+let credit = document.createElement("p");
+credit.innerText = "All data sourced from ";
+footer.appendChild(credit);
+// Create link element to link to TVMaze.com (open in new tab) and append to <p>
+let tvmaze = document.createElement("a");
+tvmaze.setAttribute("target", "_blank");
+tvmaze.innerText = "TVMaze.com";
+tvmaze.href = "https://www.tvmaze.com/";
+credit.appendChild(tvmaze);
 
 function setup() {
   makePageForEpisodes(allEpisodes);

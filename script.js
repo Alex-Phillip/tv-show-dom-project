@@ -34,7 +34,7 @@ for (let key of allEpisodes) {
   let option = document.createElement("option");
   option.setAttribute("value", key.name);
 
-  option.innerText = `${key["name"]}`;
+  option.innerText = `S${key.season.toString().padStart(2, 0)}E${key.number.toString().padStart(2, 0)} - ${key["name"]}`;
 
   episodesDropdown.appendChild(option);
 }

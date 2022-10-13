@@ -2,29 +2,53 @@
 
 const allEpisodes = getAllEpisodes();
 
-const header = document.createElement("div");
+const header = document.getElementById("header");
 let howManyEpisodesDisplayed = document.createElement("p");
-const main = document.createElement("div");
-const episodesContainer = document.createElement("div");
+const main = document.getElementById("main");
+const footer = document.getElementById("footer");
+let episodesContainer = document.getElementById("episodesContainer");
+
+// Create search box and live search functionality
+let searchFunctionality = () => {
+  const searchBox = document.createElement("input");
+  searchBox.setAttribute("id", "searchBox");
+  searchBox.setAttribute("type", "search");
+  searchBox.setAttribute("placeholder", "Search...");
+  header.appendChild(searchBox);
+  searchBox.addEventListener("input", (event) => {
+    searchTerm = event.target.value.toLowerCase();
+    let results = allEpisodes.filter((episode) => {
+      return (
+        episode["name"].toLowerCase().includes(searchTerm) ||
+        episode["summary"].toLowerCase().includes(searchTerm)
+      );
+    });
+    let clearPage = document.getElementById("episodesContainer");
+    clearPage.innerHTML = "";
+    makePageForEpisodes(results);
+  });
+};
+
+  // Create p element to give credit to TVMaze.com and append to footer
+  let credit = document.createElement("p");
+  credit.innerText = "All data sourced from ";
+  footer.appendChild(credit);
+  // Create link element to link to TVMaze.com (open in new tab) and append to <p>
+  let tvmaze = document.createElement("a");
+  tvmaze.setAttribute("target", "_blank");
+  tvmaze.innerText = "TVMaze.com";
+  tvmaze.href = "https://www.tvmaze.com/";
+  credit.appendChild(tvmaze);
 
 function setup() {
   makePageForEpisodes(allEpisodes);
-};
+}
 
 function makePageForEpisodes(episodeList) {
-  // const rootElem = document.getElementById("root"); // ORIGINAL GIVEN CODE
-
-  // Create header div and append to <html>
-  header.setAttribute("id", "header");
-  html.appendChild(header);
   // Create p element to show how many episodes are currently displayed and append to header
   howManyEpisodesDisplayed.setAttribute("id", "howManyEpisodesDisplayed");
   howManyEpisodesDisplayed.innerText = `Displaying ${episodeList.length} of 73 episode(s)`;
   header.appendChild(howManyEpisodesDisplayed);
-
-  // Create container div for episode grid and append to <main>
-  episodesContainer.setAttribute("id", "episodesContainer");
-  main.appendChild(episodesContainer);
 
   // ForEach loop iterates through array of episodes and for each object in the array:
   episodeList.forEach((episode) => {
@@ -66,50 +90,9 @@ function makePageForEpisodes(episodeList) {
     // 5. Appends article to container div
     episodesContainer.appendChild(thisEpisode);
   });
-
-  // Create main div and append to <html>
-  main.setAttribute("id", "main");
-  html.appendChild(main);
 }
 
-// Create search box and live search functionality
-let searchFunctionality = () => {
-  const searchBox = document.createElement("input");
-  searchBox.setAttribute("id", "searchBox");
-  searchBox.setAttribute("type", "search");
-  searchBox.setAttribute("placeholder", "Search...");
-  header.appendChild(searchBox);
-  searchBox.addEventListener("input", (event) => {
-    searchTerm = event.target.value.toLowerCase();
-    let results = allEpisodes.filter((episode) => {
-      return (
-        episode["name"].toLowerCase().includes(searchTerm) ||
-        episode["summary"].toLowerCase().includes(searchTerm)
-      );
-    });
-    let clearPage = document.getElementById("episodesContainer");
-    clearPage.innerHTML = "";
-    makePageForEpisodes(results);
-  });
-};
-
-function createFooter() {
-  // Create footer div and append to <html>
-  const footer = document.createElement("div");
-  footer.setAttribute("id", "footer");
-  html.appendChild(footer);
-  // Create p element to give credit to TVMaze.com and append to footer
-  let credit = document.createElement("p");
-  credit.innerText = "All data sourced from ";
-  footer.appendChild(credit);
-  // Create link element to link to TVMaze.com (open in new tab) and append to <p>
-  let tvmaze = document.createElement("a");
-  tvmaze.setAttribute("target", "_blank");
-  tvmaze.innerText = "TVMaze.com";
-  tvmaze.href = "https://www.tvmaze.com/";
-  credit.appendChild(tvmaze);
-}
-
+// Calls live search function
 searchFunctionality();
 
 window.onload = setup;

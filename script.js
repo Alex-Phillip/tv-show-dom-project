@@ -21,21 +21,21 @@ function makePageForEpisodes(episodeList) {
   const main = document.createElement("div");
   main.setAttribute("id", "main");
   html.appendChild(main);
-  
+
   // Create container div for episode grid and append to <main>
   const episodesContainer = document.createElement("div");
   episodesContainer.setAttribute("id", "episodesContainer");
   main.appendChild(episodesContainer);
-  
+
   // ForEach loop iterates through array of episodes and for each object in the array:
-  episodeList.forEach(episode => {
+  episodeList.forEach((episode) => {
     // 1. Creates an article element
     let thisEpisode = document.createElement("article");
     thisEpisode.setAttribute("id", "episode");
 
     // 2a. Creates a h1 element
     let episodeTitle = document.createElement("h1");
-    episodeTitle.setAttribute("id", "episodeTitle")
+    episodeTitle.setAttribute("id", "episodeTitle");
     // 2b. If statement to display episode name, season and number in <h1> with numbers padded to min. 2 digits
     episode["season"] < 10
       ? (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E${episode["number"]}`)
@@ -45,36 +45,39 @@ function makePageForEpisodes(episodeList) {
       : (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E${episode["number"]}`);
     // 2c. Appends <h1> to article
     thisEpisode.appendChild(episodeTitle);
-    
-    // 3a. Creates an img element
+
+    // 3a. Creates an img element to show episode thumb
     let thumb = document.createElement("img");
     // 3b. Sets <img> src to episode medium image
     thumb.src = episode["image"]["medium"];
     // 3c. Appends <img> to article
     thisEpisode.appendChild(thumb);
 
-    // 4a. Creates a p element
-    let summary = document.createElement("p");
-    summary.setAttribute("id", "summary");
+    // 4a. Creates a p element to show episode summary
+    let episodeSummary = document.createElement("p");
+    episodeSummary.setAttribute("id", "episodeSummary");
     // 4b. Sets <p> text to summary paragraph
-    summary.innerText = episode["summary"].replace("<p>", "").replace("</p>", "");
+    episodeSummary.innerText = episode["summary"]
+      .replace("<p>", "")
+      .replace("</p>", "");
     // 4c. Appends <p> to article
-    thisEpisode.appendChild(summary);
+    thisEpisode.appendChild(episodeSummary);
 
     // 5. Appends article to container div
-    episodesContainer.appendChild(thisEpisode)
-  })
+    episodesContainer.appendChild(thisEpisode);
+  });
 
   // Create footer div and append to <html>
   const footer = document.createElement("div");
   footer.setAttribute("id", "footer");
   html.appendChild(footer);
 
-  // Create p element to give credit to give credit to TVMaze.com
+  // Create p element to give credit to TVMaze.com and append to footer
   let credit = document.createElement("p");
   credit.setAttribute("id", "credit");
   credit.innerText = "All data sourced from ";
   footer.appendChild(credit);
+  // Create link element to link to TVMaze.com (open in new tab) and append to <p>
   let tvmaze = document.createElement("a");
   tvmaze.setAttribute("id", "tvmaze");
   tvmaze.setAttribute("target", "_blank");
@@ -84,4 +87,3 @@ function makePageForEpisodes(episodeList) {
 }
 
 window.onload = setup;
-

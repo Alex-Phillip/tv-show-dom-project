@@ -24,16 +24,28 @@
   background-image: linear-gradient(to bottom right, grey, darkcyan);
 }
 
+#episode:hover > #episodeSummary {
+  color: black;
+  border-color: transparent;
+}
+
+#episode:hover > #episodeTitle {
+  color: black;
+}
+
 
 /* } */
 
-#summary {
+#episodeSummary {
   font-family: 'Questrial', serif;
   font-weight: lighter;
   line-height: 125%;
   font-size: 1.3em;
   border-top: groove white .1rem;
   padding-top: 1rem;
+}
+
+#header {
 }
 
 

@@ -1,39 +1,28 @@
 //You can edit ALL of the code here
+
+const allEpisodes = getAllEpisodes();
+
+const header = document.createElement("div");
+let howManyEpisodesDisplayed = document.createElement("p");
+const main = document.createElement("div");
+const episodesContainer = document.createElement("div");
+
 function setup() {
-  const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
-}
+};
 
 function makePageForEpisodes(episodeList) {
   // const rootElem = document.getElementById("root"); // ORIGINAL GIVEN CODE
 
   // Create header div and append to <html>
-  const header = document.createElement("div");
   header.setAttribute("id", "header");
   html.appendChild(header);
   // Create p element to show how many episodes are currently displayed and append to header
-  let howManyEpisodesDisplayed = document.createElement("p");
   howManyEpisodesDisplayed.setAttribute("id", "howManyEpisodesDisplayed");
-  howManyEpisodesDisplayed.innerText = `Displaying ${episodeList.length} of ${episodeList.length} episode(s)`;
+  howManyEpisodesDisplayed.innerText = `Displaying ${episodeList.length} of 73 episode(s)`;
   header.appendChild(howManyEpisodesDisplayed);
-  // Create search box and append to header
-  const searchBox = document.createElement("input");
-  searchBox.setAttribute("id", "searchBox");
-  searchBox.setAttribute("type", "search");
-  searchBox.setAttribute("placeholder", "Search...");
-  header.appendChild(searchBox);
-
-  const resultsList = document.createElement("ul");
-  resultsList.setAttribute("id", "resultsList");
-  // append? where? needs populating...
-
-  // Create main div and append to <html>
-  const main = document.createElement("div");
-  main.setAttribute("id", "main");
-  html.appendChild(main);
 
   // Create container div for episode grid and append to <main>
-  const episodesContainer = document.createElement("div");
   episodesContainer.setAttribute("id", "episodesContainer");
   main.appendChild(episodesContainer);
 
@@ -78,11 +67,37 @@ function makePageForEpisodes(episodeList) {
     episodesContainer.appendChild(thisEpisode);
   });
 
+  // Create main div and append to <html>
+  main.setAttribute("id", "main");
+  html.appendChild(main);
+}
+
+// Create search box and live search functionality
+let searchFunctionality = () => {
+  const searchBox = document.createElement("input");
+  searchBox.setAttribute("id", "searchBox");
+  searchBox.setAttribute("type", "search");
+  searchBox.setAttribute("placeholder", "Search...");
+  header.appendChild(searchBox);
+  searchBox.addEventListener("input", (event) => {
+    searchTerm = event.target.value.toLowerCase();
+    let results = allEpisodes.filter((episode) => {
+      return (
+        episode["name"].toLowerCase().includes(searchTerm) ||
+        episode["summary"].toLowerCase().includes(searchTerm)
+      );
+    });
+    let clearPage = document.getElementById("episodesContainer");
+    clearPage.innerHTML = "";
+    makePageForEpisodes(results);
+  });
+};
+
+function createFooter() {
   // Create footer div and append to <html>
   const footer = document.createElement("div");
   footer.setAttribute("id", "footer");
   html.appendChild(footer);
-
   // Create p element to give credit to TVMaze.com and append to footer
   let credit = document.createElement("p");
   credit.innerText = "All data sourced from ";
@@ -94,5 +109,7 @@ function makePageForEpisodes(episodeList) {
   tvmaze.href = "https://www.tvmaze.com/";
   credit.appendChild(tvmaze);
 }
+
+searchFunctionality();
 
 window.onload = setup;

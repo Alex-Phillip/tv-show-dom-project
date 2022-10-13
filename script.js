@@ -37,7 +37,22 @@ for (let key of allEpisodes) {
   option.innerText = `S${key.season.toString().padStart(2, 0)}E${key.number.toString().padStart(2, 0)} - ${key["name"]}`;
 
   episodesDropdown.appendChild(option);
-}
+};
+
+ episodesDropdown.addEventListener("change", (episode) => {
+    let currentEpisode = allEpisodes.filter((e) => {
+      return (
+        episode.target.value === e.name
+      )
+    })
+
+    let clear = document.getElementById("episodesContainer");
+    clear.innerHTML = "";
+    episode.target.value === 'show-all-episodes' ? makePageForEpisodes(allEpisodes) : 
+    makePageForEpisodes(currentEpisode)});
+
+  
+  
 
 // Create p element to give credit to TVMaze.com and append to footer
 let credit = document.createElement("p");

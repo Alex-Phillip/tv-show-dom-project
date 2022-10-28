@@ -81,8 +81,8 @@ credit.appendChild(tvmaze);
 // and append <p> to footer
 footer.appendChild(credit);
 
-// Fetch data from API
-fetch("https://api.tvmaze.com/shows/527/episodes")
+// Fetch data from API and call makePage, dropdown and 
+fetch("https://api.tvmaze.com/shows/58/episodes")
 .then((response) => {
   return response.json();
 }) .then(data => {

@@ -171,9 +171,7 @@ function makePageForEpisodes(allEpisodes) {
     // and set id,
     episodeSummary.setAttribute("id", "episodeSummary");
     // and set text to summary paragraph (cutting out "<p>" tags),
-    episodeSummary.innerText = episode["summary"]
-      .replace("<p>", "")
-      .replace("</p>", "");
+    episodeSummary.innerHTML = episode["summary"];
     // and append to <article>
     thisEpisode.appendChild(episodeSummary);
 

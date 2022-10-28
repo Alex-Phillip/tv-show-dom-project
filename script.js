@@ -2,9 +2,9 @@
 const allEpisodes = getAllEpisodes();
 
 // Create function to call makePagesForEpisodes(#.) on allEpisodes(#.) on first page load(#.)   
-function setup() {
-  makePageForEpisodes(allEpisodes);
-}
+// function setup() {
+//   makePageForEpisodes(allEpisodes);
+// };
 
 // Create variable link to header
 const header = document.getElementById("header");
@@ -16,16 +16,16 @@ let episodesContainer = document.getElementById("episodesContainer");
 const footer = document.getElementById("footer");
 
 // Create input box and add live search functionality,
-let searchFunctionality = () => {
-  const searchBox = document.createElement("input");
-  searchBox.setAttribute("id", "searchBox");
+let searchFunctionality = (e) => {
+  // const searchBox = document.createElement("input");
+  // searchBox.setAttribute("id", "searchBox");
   searchBox.setAttribute("type", "search");
   searchBox.setAttribute("placeholder", "Search...");
   header.appendChild(searchBox);
 
   searchBox.addEventListener("input", (event) => {
     searchTerm = event.target.value.toLowerCase();
-    let results = allEpisodes.filter((episode) => {
+    let results = e.filter((episode) => {
       return (
         episode["name"].toLowerCase().includes(searchTerm) ||
         episode["summary"].toLowerCase().includes(searchTerm)
@@ -39,30 +39,30 @@ let searchFunctionality = () => {
   });
 };
 
-// Create dropdown menu single episode selection functionality
-for (let key of allEpisodes) {
+// Populate dropdown menu and add single episode selection functionality ("episodesDropdown" created directly in html)
+function dropdownMenu(e) {
+
+  for (let key of e) {
   let option = document.createElement("option");
   option.setAttribute("value", key.name);
 
-  option.innerText = `S${key.season.toString().padStart(2, 0)}E${key.number
-    .toString()
-    .padStart(2, 0)} - ${key["name"]}`;
+  option.innerText = `S${key.season.toString().padStart(2, 0)}E${key.number.toString().padStart(2, 0)} - ${key["name"]}`;
 
   episodesDropdown.appendChild(option);
 }
 
 episodesDropdown.addEventListener("change", (episode) => {
-  let currentEpisode = allEpisodes.filter((e) => {
-    return episode.target.value === e.name;
+  let currentEpisode = e.filter((ep) => {
+    return episode.target.value === ep.name;
   });
 
   let clear = document.getElementById("episodesContainer");
   clear.innerHTML = "";
-  episode.target.value === "show-all-episodes"
-    ? makePageForEpisodes(allEpisodes)
+  episode.target.value === "showAllEpisodes"
+    ? makePageForEpisodes(e)
     : makePageForEpisodes(currentEpisode);
 });
-
+};
 // Create <p> element to dynamically display how many of the total episodes are shown(#.),
 let howManyEpisodesDisplayed = document.createElement("p");
 // and set id
@@ -80,6 +80,16 @@ tvmaze.setAttribute("target", "_blank");
 credit.appendChild(tvmaze);
 // and append <p> to footer
 footer.appendChild(credit);
+
+// Fetch data from API
+fetch("https://api.tvmaze.com/shows/527/episodes")
+.then((response) => {
+  return response.json();
+}) .then(data => {
+  makePageForEpisodes(data);
+  dropdownMenu(data);
+  searchFunctionality(data);
+});
 
 // Create function to display episode(s):
 function makePageForEpisodes(allEpisodes) {

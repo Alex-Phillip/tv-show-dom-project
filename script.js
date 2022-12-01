@@ -6,7 +6,7 @@ let allShows = getAllShows().sort((a, b) =>
 
 // Create function to call makePagesForEpisodes(#.) on allEpisodes(#.) on first page load(#.)
 function setup() {
-  makePageForEpisodes(allShows);
+  makePageForShows(allShows);
 }
 
 // Create variable link to shows dropdown
@@ -57,13 +57,11 @@ function showsDropdownMenu(s) {
   }
 
   showsDropdown.addEventListener("change", (show) => {
-    // let currentShow = s.filter((sh) => {
-    //   return show.target.value === sh.id;
-    // });
     let showID = show.target.value;
-    console.log(showID);
+
     let clear = document.getElementById("episodesContainer");
     clear.innerHTML = "";
+
     show.target.value === "showAllShows"
       ? makePageForEpisodes(s)
       : fetchData(showID);
@@ -111,7 +109,7 @@ let tvmaze = document.createElement("a");
 tvmaze.innerText = "TVMaze.com";
 tvmaze.href = "https://www.tvmaze.com/";
 tvmaze.setAttribute("target", "_blank");
-// and append to <p>,
+// and append <a> to <p>,
 credit.appendChild(tvmaze);
 // and append <p> to footer
 footer.appendChild(credit);
@@ -127,7 +125,94 @@ function fetchData(show) {
       episodesDropdownMenu(data);
       searchFunctionality(data);
     });
-}
+};
+
+// Create function to display episode(s):
+function makePageForShows(allEpisodes) {
+  // Set text content to display how many of the total episodes are on shown(#.),
+  howManyEpisodesDisplayed.innerText = `Displaying ${allEpisodes.length} of 73 episode(s)`;
+  // and append to header
+  header.appendChild(howManyEpisodesDisplayed);
+
+  // Iterate through the episodes object, and for each episode,
+  allEpisodes.forEach((episode) => {
+    // Create an <article> element to display episode information and image,
+    let thisEpisode = document.createElement("article");
+    // and set id
+    thisEpisode.setAttribute("id", "episode");
+
+    // Create a <h1> element to display episode title,
+    let episodeTitle = document.createElement("h1");
+    // and set id,
+    episodeTitle.setAttribute("id", "episodeTitle");
+    // and set text to display episode name, season and number (numbers padded with "0" to min. 2 digits)
+    episode["season"] < 10
+      ? (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E${episode["number"]}`)
+      : (episodeTitle.innerText = `${episode["name"]} - S${episode["season"]}E${episode["number"]}`);
+    episode["number"] < 10
+      ? (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E0${episode["number"]}`)
+      : (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E${episode["number"]}`);
+    // and append to <article>
+    thisEpisode.appendChild(episodeTitle);
+
+    // Create an <img> element to display episode thumbnail,
+    let thumb = document.createElement("img");
+    // and set id,
+    thumb.setAttribute("id", "thumb");
+    // and set src to medium image,
+    thumb.src = episode["image"]["medium"];
+    // and append to <article>
+    thisEpisode.appendChild(thumb);
+
+    // Create a <p> element to display episode summary,
+    let episodeSummary = document.createElement("p");
+    // and set id,
+    episodeSummary.setAttribute("id", "episodeSummary");
+    // and set text to summary paragraph (cutting out "<p>" tags),
+    episodeSummary.innerHTML = episode["summary"];
+    // and append to <article>
+    thisEpisode.appendChild(episodeSummary);
+
+    // Create a <p> element to display episode genre,
+    let episodeGenre = document.createElement("p");
+    // and set id,
+    episodeGenre.setAttribute("id", "episodeGenre");
+    // and set text to summary paragraph (cutting out "<p>" tags),
+    episodeGenre.innerHTML = `Genre: ${episode["genres"]}`;
+    // and append to <article>
+    thisEpisode.appendChild(episodeGenre);
+
+    // Create a <p> element to display episode rating,
+    let episodeRating = document.createElement("p");
+    // and set id,
+    episodeRating.setAttribute("id", "episodeRating");
+    // and set text to summary paragraph (cutting out "<p>" tags),
+    episodeRating.innerHTML = `Rating: ${episode["rating"]["average"]}`;
+    // and append to <article>
+    thisEpisode.appendChild(episodeRating);
+
+    // Create a <p> element to display episode runtime,
+    let episodeRuntime = document.createElement("p");
+    // and set id,
+    episodeRuntime.setAttribute("id", "episodeRuntime");
+    // and set text to summary paragraph (cutting out "<p>" tags),
+    episodeRuntime.innerHTML = `Runtime: ${episode["runtime"]}`;
+    // and append to <article>
+    thisEpisode.appendChild(episodeRuntime);
+
+    // Create a <p> element to display episode status,
+    let episodeStatus = document.createElement("p");
+    // and set id,
+    episodeStatus.setAttribute("id", "episodeStatus");
+    // and set text to summary paragraph (cutting out "<p>" tags),
+    episodeStatus.innerHTML = `Status: ${episode["status"]}`;
+    // and append to <article>
+    thisEpisode.appendChild(episodeStatus);
+
+    // Append <article> to container <div>(#.)
+    episodesContainer.appendChild(thisEpisode);
+  });
+};
 
 // Create function to display episode(s):
 function makePageForEpisodes(allEpisodes) {

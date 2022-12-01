@@ -1,8 +1,5 @@
-/* @media only screen and (max-width: 600px) { */
-
 #main {
   color: white;
-  /* background-image: linear-gradient(to top left, grey, darkcyan); */
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
 }
@@ -23,7 +20,6 @@
 }
 
 #episode:hover {
-  /* opacity: 0.5; */
   color: black;
   border-color: transparent;
 }

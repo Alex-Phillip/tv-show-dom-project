@@ -2,15 +2,22 @@
 const allEpisodes = getAllEpisodes();
 let allShows = getAllShows().sort((a, b) =>
   a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-  );
+);
+
+//Create variable link to shows search box
+let showsSearch = document.getElementById("showSearch");
 
 // Create function to call makePagesForEpisodes(#.) on allEpisodes(#.) on first page load(#.)
 function setup() {
   makePageForShows(allShows);
+  
 }
 
 // Create variable link to shows dropdown
 const showsDropdown = document.getElementById("showsDropdown");
+
+// Create variable link to episodes search
+const searchBox = document.getElementById("searchBox");
 
 // Create variable link to header
 const header = document.getElementById("header");
@@ -21,7 +28,7 @@ let episodesContainer = document.getElementById("episodesContainer");
 // Create variable link to footer
 const footer = document.getElementById("footer");
 
-// Create input box and add live search functionality,
+// Create input box and add live search functionality, for episodes
 let searchFunctionality = (e) => {
   // const searchBox = document.createElement("input");
   // searchBox.setAttribute("id", "searchBox");
@@ -42,6 +49,26 @@ let searchFunctionality = (e) => {
     clearPage.innerHTML = "";
 
     makePageForEpisodes(results);
+  });
+};
+
+//Search functionality for shows
+let searchShows = (s) => {
+
+  showsSearch.addEventListener("input", (event) => {
+    searchTerm = event.target.value.toLowerCase();
+    console.log(searchTerm)
+    let results = s.filter((show) => {
+      return (
+        show["name"].toLowerCase().includes(searchTerm) ||
+        show["summary"].toLowerCase().includes(searchTerm) ||
+        show["genres"].join(" ").toLowerCase().includes(searchTerm)
+      );
+    });
+
+    let clearPage = document.getElementById("episodesContainer");
+    clearPage.innerHTML = "";
+    makePageForShows(results);
   });
 };
 
@@ -125,7 +152,7 @@ function fetchData(show) {
       episodesDropdownMenu(data);
       searchFunctionality(data);
     });
-};
+}
 
 // Create function to display episode(s):
 function makePageForShows(allEpisodes) {
@@ -134,8 +161,11 @@ function makePageForShows(allEpisodes) {
   // and hide from screen
   episodesDropdownMenu.style.display = "none";
 
+  searchBox.style.display = "none";
+  showsSearch.style.display = "flex";
+
   // Set text content to display how many of the total episodes are on shown(#.),
-  howManyEpisodesDisplayed.innerText = `Displaying ${allEpisodes.length} of 73 episode(s)`;
+  howManyEpisodesDisplayed.innerText = `Displaying ${allEpisodes.length} of 301 show(s)`;
   // and append to header
   header.appendChild(howManyEpisodesDisplayed);
 
@@ -151,15 +181,15 @@ function makePageForShows(allEpisodes) {
     // and set id,
     episodeTitle.setAttribute("id", "episodeTitle");
     // and set text to display show name
-    episodeTitle.innerText = `${episode["name"]}`
-    episodeTitle.value = episode.id
+    episodeTitle.innerText = `${episode["name"]}`;
+    episodeTitle.value = episode.id;
     // and append to <article>
     thisEpisode.appendChild(episodeTitle);
     episodeTitle.addEventListener("click", () => {
       let clearShows = document.getElementById("episodesContainer");
       clearShows.innerHTML = "";
       fetchData(episodeTitle.value);
-    })
+    });
 
     // Create an <img> element to display episode thumbnail,
     let thumb = document.createElement("img");
@@ -218,7 +248,7 @@ function makePageForShows(allEpisodes) {
     // Append <article> to container <div>(#.)
     episodesContainer.appendChild(thisEpisode);
   });
-};
+}
 
 // Create function to display episode(s):
 function makePageForEpisodes(allEpisodes) {
@@ -226,6 +256,9 @@ function makePageForEpisodes(allEpisodes) {
   let episodesDropdownMenu = document.getElementById("episodesDropdown");
   // and unhide
   episodesDropdownMenu.style.display = "flex";
+
+  showsSearch.style.display = "none";
+  searchBox.style.display = "flex";
 
   // Set text content to display how many of the total episodes are on shown(#.),
   howManyEpisodesDisplayed.innerText = `Displaying ${allEpisodes.length} of 73 episode(s)`;
@@ -278,6 +311,6 @@ function makePageForEpisodes(allEpisodes) {
 
 // Call live search function(#.)
 searchFunctionality();
-
+searchShows(allShows);
 // Call setup function(#) on first page load
 window.onload = setup;

@@ -145,13 +145,8 @@ function makePageForShows(allEpisodes) {
     let episodeTitle = document.createElement("h1");
     // and set id,
     episodeTitle.setAttribute("id", "episodeTitle");
-    // and set text to display episode name, season and number (numbers padded with "0" to min. 2 digits)
-    episode["season"] < 10
-      ? (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E${episode["number"]}`)
-      : (episodeTitle.innerText = `${episode["name"]} - S${episode["season"]}E${episode["number"]}`);
-    episode["number"] < 10
-      ? (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E0${episode["number"]}`)
-      : (episodeTitle.innerText = `${episode["name"]} - S0${episode["season"]}E${episode["number"]}`);
+    // and set text to display show name
+    episodeTitle.innerText = `${episode["name"]}`
     // and append to <article>
     thisEpisode.appendChild(episodeTitle);
 
